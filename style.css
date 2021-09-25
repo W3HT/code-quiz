@@ -39,3 +39,12 @@ body {
     color: red
 }
 
+.start-btn {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.hide {
+    display: none;
+}
+}

@@ -2,6 +2,7 @@
 var startBtn = document.getElementById("startBtn");
 var questionContainerDiv = document.getElementById("questions-container");
 var scoreBox = document.getElementById("scoreBox")
+var high
 var currentQuestionIndex;
 // call global variables
 var secondsLeft = document.getElementById("secondsLeft");
@@ -16,6 +17,7 @@ var answerB = document.getElementById("btn-2")
 var answerC = document.getElementById("btn-3")
 var answerD = document.getElementById("btn-4")
 var nextQuestion;
+var listOfHighScores = document.getElementById("listOfHighScores")
 
 // arrays
 const questions = [
@@ -24,24 +26,16 @@ const questions = [
         answers: ["A.  An array is a special variable, which can hold more than one value at a time.","B.  its a fish.", "C.  its a fruit","D.  its a banana"], answer: "A.  An array is a special variable, which can hold more than one value at a time."
     },
     {
-        question: "What is an array?",
-        answers: ["A.  An array is a special variable, which can hold more than one value at a time.","B.  its a fish.", "C.  its a fruit","D.  its a banana"], answer: "A.  An array is a special variable, which can hold more than one value at a time."
+        question: "Who invented Javascript?",
+        answers: ["A. Michael Jordan","B.  Brendan Eich.", "C.  John Doe","D.  La Bamba"], answer: "B.  Brendan Eich."
     },
     {
-        question: "What is an array?",
-        answers: ["A.  An array is a special variable, which can hold more than one value at a time.","B.  its a fish.", "C.  its a fruit","D.  its a banana"], answer: "A.  An array is a special variable, which can hold more than one value at a time."
+        question: "What is the first index in an array?",
+        answers: ["A.  Z","B.  1", "C.  0","D.  A"], answer: "C.  0"
     },
     {
-        question: "What is an array?",
-        answers: ["A.  An array is a special variable, which can hold more than one value at a time.","B.  its a fish.", "C.  its a fruit","D.  its a banana"], answer: "A.  An array is a special variable, which can hold more than one value at a time."
-    },
-    {
-        question: "What is an array?",
-        answers: ["A.  An array is a special variable, which can hold more than one value at a time.","B.  its a fish.", "C.  its a fruit","D.  its a banana"], answer: "A.  An array is a special variable, which can hold more than one value at a time."
-    },
-    {
-        question: "What is an array?",
-        answers: ["A.  An array is a special variable, which can hold more than one value at a time.","B.  its a fish.", "C.  its a fruit","D.  its a banana"], answer: "A.  An array is a special variable, which can hold more than one value at a time."
+        question: "How do you comment in Javascript?",
+        answers: ["A.  ** Comment Here","B.  ?! Comment Here", "C.  ~~ Comment Here","D.  // Comment Here"], answer: "D.  // Comment Here"
     }
 ]
 
@@ -52,7 +46,7 @@ const questions = [
 
 
 // function startGame
-// function startGame () {
+
    
 function startGame() {
    
@@ -66,16 +60,15 @@ function startGame() {
     
 }
 
-// // function startTimer
+// function startTimer
 function startTimer() {
     var timer = setInterval(function() {
     timerCount--;
     secondsLeft.textContent = timerCount;
-    // console.log(secondsLeft);
-          if (timerCount <= 0) {
+        if (timerCount <= 0) {
         clearInterval(timer);
         if(currentQuestionIndex < questions.length -1) {
-        score();
+        endGame();
         }
 
     }
@@ -91,14 +84,7 @@ function displayQuestion() {
     nextQuestion();
 }
 
-    //event listener
-    
-
-
-     
-        // button pressed
-        // correct
-            //next question
+// next question  
 function nextQuestion() {
     questionAsk.textContent = questions[currentQuestionIndex].question;
     answerA.textContent = questions[currentQuestionIndex].answers[0]
@@ -106,6 +92,8 @@ function nextQuestion() {
     answerC.textContent = questions[currentQuestionIndex].answers[2]
     answerD.textContent = questions[currentQuestionIndex].answers[3]
 }
+
+// check answers
 function checkAnswer(answer) {
     if(questions[currentQuestionIndex].answer === questions[currentQuestionIndex].answers[answer]) {
     scoreCounter++;
@@ -119,7 +107,7 @@ function checkAnswer(answer) {
     if( currentQuestionIndex < questions.length) {
         nextQuestion();
     } else {
-        score();
+        endGame();
     }
     
 }
@@ -146,20 +134,65 @@ function answerDD() {
     console.log("D");
 }
 
-
-function score() {
+//     scoreCounter++
+function endGame() {
     questionContainerDiv.classList.add("hide")
     scoreBox.classList.remove("hide")
     finalScore.textContent = scoreCounter;
+    highScore();
     
 
 }
-//     scoreCounter++
+
+function highScore(event) {
+    event.preventDefault();
+    if (initInput.value === "") {
+        alert("Please enter your initials");
+        return;
+
+    }
+    var savedScores = localStorage.getItem("high score");
+    var highScores = []
+
+    if (savedScores === null) {
+        highScores =[];
+    } else {
+        highScores =  JSON.parse(savedScores)
+    }
+
+    var playerScore = {
+        initials: initInput.value,
+        score: finalScore.textContent
+
+    };
+
+    console.log(playerScore);
+    highScores.push(playerScore);
+
+    var scoresString = JSON.stringify(highScores);
+    window.localStorage.setItem("high scores", scoresString);
+
+    displayHighScores();
+}
+
+var i = 0;
+function displayHighScores() {
+    var savedHighScores = localStorage.getItem("high Scores");
+    if ( savedHighScores === null) {
+        return;
+    }
+    console.log(savedHighScores);
+    var storedHighScores = JSON.parse(savedHighScores);
+    for (; i < storedHighScores.length; i++) {
+        var eachNewScore = document.createElement("p");
+        eachNewScore.innerHTML = storedHighScores[i].initials + ": " + storedHighScores[i].score;
+        listOfHighScores.appendch
+    }
 
 
-// }
-//         // 
-        
+}
+//event listeners
+
 startBtn.addEventListener('click', startGame)
 answerA.addEventListener("click", answerAA)
 answerB.addEventListener("click", answerBB)

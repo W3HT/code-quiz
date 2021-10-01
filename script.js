@@ -1,13 +1,13 @@
 // selectors
 var startBtn = document.getElementById("startBtn");
 var questionContainerDiv = document.getElementById("questions-container");
-
+var scoreBox = document.getElementById("scoreBox")
 var currentQuestionIndex;
 // call global variables
 var secondsLeft = document.getElementById("secondsLeft");
-
+var scoreCounter = 0;
+var finalScore = document.getElementById("finalScore");
 var answerBtnElement = document.getElementById("optsion-btns");
-var scoreCounter;
 var timer;
 var timerCount = 20;
 var questionAsk = document.getElementById("questionAsk")
@@ -68,18 +68,18 @@ function startGame() {
 
 // // function startTimer
 function startTimer() {
-    timer = setInterval(function() {
+    var timer = setInterval(function() {
     timerCount--;
     secondsLeft.textContent = timerCount;
     // console.log(secondsLeft);
-    // console.log(scoreCounter);
-        if (timerCount <= 0) {
+          if (timerCount <= 0) {
         clearInterval(timer);
-        if(currentQuestionIndex < questions.length -1) {}
+        if(currentQuestionIndex < questions.length -1) {
         score();
         }
 
-       
+    }
+
     }, 1000)
 
     displayQuestion()
@@ -109,11 +109,18 @@ function nextQuestion() {
 function checkAnswer(answer) {
     if(questions[currentQuestionIndex].answer === questions[currentQuestionIndex].answers[answer]) {
     scoreCounter++;
+    console.log(scoreCounter);
     }
         else {
             timerCount -= 10;
             secondsLeft.textContent = timerCount;
         }
+    currentQuestionIndex++;
+    if( currentQuestionIndex < questions.length) {
+        nextQuestion();
+    } else {
+        score();
+    }
     
 }
 
@@ -140,7 +147,13 @@ function answerDD() {
 }
 
 
-// function score() {
+function score() {
+    questionContainerDiv.classList.add("hide")
+    scoreBox.classList.remove("hide")
+    finalScore.textContent = scoreCounter;
+    
+
+}
 //     scoreCounter++
 
 

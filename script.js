@@ -7,7 +7,7 @@ var currentQuestionIndex;
 var secondsLeft = document.getElementById("secondsLeft");
 
 var answerBtnElement = document.getElementById("optsion-btns");
-var scoreCounter = 0;
+var scoreCounter;
 var timer;
 var timerCount = 20;
 var questionAsk = document.getElementById("questionAsk")
@@ -71,7 +71,8 @@ function startTimer() {
     timer = setInterval(function() {
     timerCount--;
     secondsLeft.textContent = timerCount;
-    console.log(secondsLeft);
+    // console.log(secondsLeft);
+    // console.log(scoreCounter);
         if (timerCount <= 0) {
         clearInterval(timer);
         if(currentQuestionIndex < questions.length -1) {}
@@ -105,6 +106,38 @@ function nextQuestion() {
     answerC.textContent = questions[currentQuestionIndex].answers[2]
     answerD.textContent = questions[currentQuestionIndex].answers[3]
 }
+function checkAnswer(answer) {
+    if(questions[currentQuestionIndex].answer === questions[currentQuestionIndex].answers[answer]) {
+    scoreCounter++;
+    }
+        else {
+            timerCount -= 10;
+            secondsLeft.textContent = timerCount;
+        }
+    
+}
+
+function answerAA() {
+    checkAnswer(0);
+    console.log("A");
+}
+
+function answerBB() {
+    checkAnswer(1);
+    console.log("b");
+}
+
+
+function answerCC() {
+    checkAnswer(2);
+    console.log("C");
+}
+
+
+function answerDD() {
+    checkAnswer(3);
+    console.log("D");
+}
 
 
 // function score() {
@@ -115,3 +148,7 @@ function nextQuestion() {
 //         // 
         
 startBtn.addEventListener('click', startGame)
+answerA.addEventListener("click", answerAA)
+answerB.addEventListener("click", answerBB)
+answerC.addEventListener("click", answerCC)
+answerD.addEventListener("click", answerDD)

@@ -1,23 +1,37 @@
 // selectors
-var startBtn = document.getElementById("startBtn");
-var questionContainerDiv = document.getElementById("questions-container");
-var scoreBox = document.getElementById("scoreBox")
+
+
+
 var high
-var currentQuestionIndex;
+
 // call global variables
-var secondsLeft = document.getElementById("secondsLeft");
-var scoreCounter = 0;
-var finalScore = document.getElementById("finalScore");
-var answerBtnElement = document.getElementById("optsion-btns");
+
+
+
+var startBtn = document.getElementById("startBtn");
 var timer;
 var timerCount = 20;
+
+var currentQuestionIndex;
+var nextQuestion;
+
 var questionAsk = document.getElementById("questionAsk")
+var questionContainerDiv = document.getElementById("questions-container");
 var answerA = document.getElementById("btn-1")
 var answerB = document.getElementById("btn-2")
 var answerC = document.getElementById("btn-3")
 var answerD = document.getElementById("btn-4")
-var nextQuestion;
+
 var listOfHighScores = document.getElementById("listOfHighScores")
+var initInput = document.getElementById("initInput")
+
+var scoreBox = document.getElementById("scoreBox")
+var submitInitBtn = document.getElementById("submitInitBtn")
+var secondsLeft = document.getElementById("secondsLeft");
+var scoreCounter = 0;
+var finalScore = document.getElementById("finalScore");
+var savedScores;
+
 
 // arrays
 const questions = [
@@ -39,11 +53,7 @@ const questions = [
     }
 ]
 
-
-
-
-
-
+console.log(localStorage.getItem("scoreboard"))
 
 // function startGame
 
@@ -55,6 +65,7 @@ function startGame() {
     startBtn.classList.add("hide");
     questionContainerDiv.classList.remove("hide");
     currentQuestionIndex = 0;
+    initInput.textContent = "";
   
     startTimer();
     
@@ -97,7 +108,6 @@ function nextQuestion() {
 function checkAnswer(answer) {
     if(questions[currentQuestionIndex].answer === questions[currentQuestionIndex].answers[answer]) {
     scoreCounter++;
-    console.log(scoreCounter);
     }
         else {
             timerCount -= 10;
@@ -114,83 +124,100 @@ function checkAnswer(answer) {
 
 function answerAA() {
     checkAnswer(0);
-    console.log("A");
 }
 
 function answerBB() {
     checkAnswer(1);
-    console.log("b");
 }
 
 
 function answerCC() {
     checkAnswer(2);
-    console.log("C");
 }
 
 
 function answerDD() {
     checkAnswer(3);
-    console.log("D");
 }
 
 //     scoreCounter++
 function endGame() {
     questionContainerDiv.classList.add("hide")
     scoreBox.classList.remove("hide")
+    submitInitBtn.classList.remove("hide")
     finalScore.textContent = scoreCounter;
-    highScore();
+    saveScore();
+    // scoreBoard();
     
 
 }
 
-function highScore(event) {
-    event.preventDefault();
-    if (initInput.value === "") {
-        alert("Please enter your initials");
-        return;
+// function scoreboard() {
+//     // event.preventDefault();
+//     listOfHighScores.textContent = savedScores
+//     var listOfScores = JSON.parse(localStorage.getItem("scoreBoard"));
+// }var savedScores = {
+//     initInput.textContent , finalScore.value
+// }
 
-    }
-    var savedScores = localStorage.getItem("high score");
-    var highScores = []
-
-    if (savedScores === null) {
-        highScores =[];
-    } else {
-        highScores =  JSON.parse(savedScores)
-    }
-
-    var playerScore = {
-        initials: initInput.value,
-        score: finalScore.textContent
-
-    };
-
-    console.log(playerScore);
-    highScores.push(playerScore);
-
-    var scoresString = JSON.stringify(highScores);
-    window.localStorage.setItem("high scores", scoresString);
-
-    displayHighScores();
-}
-
-var i = 0;
-function displayHighScores() {
-    var savedHighScores = localStorage.getItem("high Scores");
-    if ( savedHighScores === null) {
-        return;
-    }
-    console.log(savedHighScores);
-    var storedHighScores = JSON.parse(savedHighScores);
-    for (; i < storedHighScores.length; i++) {
-        var eachNewScore = document.createElement("p");
-        eachNewScore.innerHTML = storedHighScores[i].initials + ": " + storedHighScores[i].score;
-        listOfHighScores.appendch
-    }
-
+function saveScore() { 
+          
+        localStorage.setItem("scoreBoard", JSON.stringify(saveScores));
+        console.log.getItem(savedScores)
 
 }
+ 
+    
+
+//     if (initInput.value === "") {
+//         alert("Please enter your initials ");
+//         return;
+//     }
+
+
+//     var savedScores = localStorage.getItem("high score");
+//     var highScores = []
+
+//     if (savedScores === null) {
+//         highScores =[];
+//     } else {
+//         highScores =  JSON.parse(savedScores)
+//     }
+
+//     var playerScore = {
+//         initials: initInput.value,
+//         score: finalScore.textContent
+
+//     };
+
+//     console.log(playerScore);
+//     highScores.push(playerScore);
+
+//     var scoresString = JSON.stringify(highScores);
+//     window.localStorage.setItem("high scores", scoresString);
+//     console.log(localStorage.getItem("high score"));
+
+//     displayHighScores();
+// }
+
+
+// function displayHighScores() {
+
+//     var savedHighScores = localStorage.getItem("high Scores");
+//     if ( savedHighScores === null) {
+//         return;
+//     }
+//     console.log(savedHighScores);
+//     var storedHighScores = JSON.parse(savedHighScores);
+//     for (var i = 0; i < storedHighScores.length; i++) {
+//         var eachNewScore = document.createElement("p");
+//         eachNewScore.innerHTML = storedHighScores[i].initials + ": " + storedHighScores[i].score;
+//         listOfHighScores.appendChild(eachNewScore);
+//         console.log(listOfHighScores);
+//     }
+
+
+
 //event listeners
 
 startBtn.addEventListener('click', startGame)
@@ -198,3 +225,5 @@ answerA.addEventListener("click", answerAA)
 answerB.addEventListener("click", answerBB)
 answerC.addEventListener("click", answerCC)
 answerD.addEventListener("click", answerDD)
+submitInitBtn.addEventListener("click", saveScore)
+

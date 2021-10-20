@@ -9,11 +9,7 @@
 </head>
 <body>
     <div class="timer-container">
-        <p id="scoreBox" class="hide">
-            Quiz over! Your final score : <span id="finalScore"></span>
-            <p id="highScore" class="hide">HIGH SCORES</p>
-            <p id="listOfHighScores"></p>
-        </p>
+        
         <div id="questions-container" class="hide">
             <div id="timer"> Time Left : <span id="secondsLeft"></span></div>
             <p id="questionAsk"></p>
@@ -24,7 +20,26 @@
                     <button class="btn4 btn" id = "btn-4">Answer 4</button>
                 </div>
             </div>
+        
             <button id= "startBtn" class="startBtn btn">Start</button>
+
+            <div id="scoreBox" class="hide">
+                <h3>Quiz over! Your final score : <span id="finalScore"></span>
+                </h3>
+                <form>
+                <p> Please enter your initials: <input id="initInput" type="text"></p>
+                <button id="submitInitBtn" class="hide" type="submit">Submit</button>
+                </p>
+                </form>
+        
+               
+                </p>
+            </div>
+
+            <div class="hide" id="listOfHighScores"></div>
+            <P>
+            <button class="hide" id="goBack">Go Back</button>
+            <p>
         </div>
     </div>
 

@@ -175,29 +175,29 @@ function saveScore() {
 //     }
 
 
-//     var savedScores = localStorage.getItem("high score");
-//     var highScores = []
+    var savedScores = localStorage.getItem("high score");
+    var highScores = []
 
-//     if (savedScores === null) {
-//         highScores =[];
-//     } else {
-//         highScores =  JSON.parse(savedScores)
-//     }
+    if (savedScores === null) {
+        highScores =[];
+    } else {
+        highScores =  JSON.parse(savedScores)
+    }
 
-//     var playerScore = {
-//         initials: initInput.value,
-//         score: finalScore.textContent
+    var playerScore = {
+        initials: initInput.value,
+        score: finalScore.textContent
 
-//     };
+    };
 
-//     console.log(playerScore);
-//     highScores.push(playerScore);
+    console.log(playerScore);
+    highScores.push(playerScore);
 
-//     var scoresString = JSON.stringify(highScores);
-//     window.localStorage.setItem("high scores", scoresString);
-//     console.log(localStorage.getItem("high score"));
+    var scoresString = JSON.stringify(highScores);
+    window.localStorage.setItem("high scores", scoresString);
+    console.log(localStorage.getItem("high score"));
 
-//     displayHighScores();
+    // displayHighScores();
 // }
 
 
